@@ -115,14 +115,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BACPACK\training.bacpack.bacpac" />
+    <None Include="BACPACK\training.bacpac" />
     <None Include="POST-DEPLOYMENT\CreateBigTables-debug-environment.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="POST-DEPLOYMENT\CreateBigTables-release-environment.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Training-DEBUG.publish.xml" />
     <None Include="Training-RELEASE.publish.xml" />
   </ItemGroup>
   <ItemGroup>
