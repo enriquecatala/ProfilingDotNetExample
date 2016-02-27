@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TrainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="State" Type="char" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomersBig">
+          <Key>
+            <PropertyRef Name="ID_Customer" />
+          </Key>
+          <Property Name="ID_Customer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="264" />
+          <Property Name="Col1" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Col2" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemsBig">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+            <PropertyRef Name="ID_Product" />
+          </Key>
+          <Property Name="ID_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Product" Type="int" Nullable="false" />
+          <Property Name="Delivery_Date" Type="datetime" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="OrdersBig">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_Customer" Type="int" Nullable="false" />
+          <Property Name="Order_Date" Type="datetime" />
+          <Property Name="Value" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductsBig">
+          <Key>
+            <PropertyRef Name="ID_Product" />
+          </Key>
+          <Property Name="ID_Product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Name" Type="varchar" MaxLength="259" />
+          <Property Name="Col1" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_ItemsBig_OrdersBig">
+          <End Role="OrdersBig" Type="Self.OrdersBig" Multiplicity="1" />
+          <End Role="ItemsBig" Type="Self.ItemsBig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersBig">
+              <PropertyRef Name="ID_Order" />
+            </Principal>
+            <Dependent Role="ItemsBig">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_OrdersBig_CustomersBig">
+          <End Role="CustomersBig" Type="Self.CustomersBig" Multiplicity="1" />
+          <End Role="OrdersBig" Type="Self.OrdersBig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomersBig">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="OrdersBig">
+              <PropertyRef Name="ID_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetCustomersPaged" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pagenumber" Type="int" Mode="In" />
+          <Parameter Name="pagesize" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TrainingModelStoreContainer">
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomersBig" EntityType="Self.CustomersBig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemsBig" EntityType="Self.ItemsBig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdersBig" EntityType="Self.OrdersBig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsBig" EntityType="Self.ProductsBig" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_ItemsBig_OrdersBig" Association="Self.fk_ItemsBig_OrdersBig">
+            <End Role="OrdersBig" EntitySet="OrdersBig" />
+            <End Role="ItemsBig" EntitySet="ItemsBig" />
+          </AssociationSet>
+          <AssociationSet Name="fk_OrdersBig_CustomersBig" Association="Self.fk_OrdersBig_CustomersBig">
+            <End Role="CustomersBig" EntitySet="CustomersBig" />
+            <End Role="OrdersBig" EntitySet="OrdersBig" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TrainingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomersBig">
+          <Key>
+            <PropertyRef Name="ID_Customer" />
+          </Key>
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="264" FixedLength="false" Unicode="false" />
+          <Property Name="Col1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Col2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="OrdersBigs" Relationship="Self.fk_OrdersBig_CustomersBig" FromRole="CustomersBig" ToRole="OrdersBig" />
+        </EntityType>
+        <EntityType Name="ItemsBig">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+            <PropertyRef Name="ID_Product" />
+          </Key>
+          <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Product" Type="Int32" Nullable="false" />
+          <Property Name="Delivery_Date" Type="DateTime" Precision="3" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="OrdersBig" Relationship="Self.fk_ItemsBig_OrdersBig" FromRole="ItemsBig" ToRole="OrdersBig" />
+        </EntityType>
+        <EntityType Name="OrdersBig">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Customer" Type="Int32" Nullable="false" />
+          <Property Name="Order_Date" Type="DateTime" Precision="3" />
+          <Property Name="Value" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="CustomersBig" Relationship="Self.fk_OrdersBig_CustomersBig" FromRole="OrdersBig" ToRole="CustomersBig" />
+          <NavigationProperty Name="ItemsBigs" Relationship="Self.fk_ItemsBig_OrdersBig" FromRole="OrdersBig" ToRole="ItemsBig" />
+        </EntityType>
+        <EntityType Name="ProductsBig">
+          <Key>
+            <PropertyRef Name="ID_Product" />
+          </Key>
+          <Property Name="ID_Product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" MaxLength="259" FixedLength="false" Unicode="false" />
+          <Property Name="Col1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_OrdersBig_CustomersBig">
+          <End Role="CustomersBig" Type="Self.CustomersBig" Multiplicity="1" />
+          <End Role="OrdersBig" Type="Self.OrdersBig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomersBig">
+              <PropertyRef Name="ID_Customer" />
+            </Principal>
+            <Dependent Role="OrdersBig">
+              <PropertyRef Name="ID_Customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ItemsBig_OrdersBig">
+          <End Role="OrdersBig" Type="Self.OrdersBig" Multiplicity="1" />
+          <End Role="ItemsBig" Type="Self.ItemsBig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdersBig">
+              <PropertyRef Name="ID_Order" />
+            </Principal>
+            <Dependent Role="ItemsBig">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TrainingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cities" EntityType="Self.City" />
+          <EntitySet Name="CustomersBigs" EntityType="Self.CustomersBig" />
+          <EntitySet Name="ItemsBigs" EntityType="Self.ItemsBig" />
+          <EntitySet Name="OrdersBigs" EntityType="Self.OrdersBig" />
+          <EntitySet Name="ProductsBigs" EntityType="Self.ProductsBig" />
+          <AssociationSet Name="fk_OrdersBig_CustomersBig" Association="Self.fk_OrdersBig_CustomersBig">
+            <End Role="CustomersBig" EntitySet="CustomersBigs" />
+            <End Role="OrdersBig" EntitySet="OrdersBigs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ItemsBig_OrdersBig" Association="Self.fk_ItemsBig_OrdersBig">
+            <End Role="OrdersBig" EntitySet="OrdersBigs" />
+            <End Role="ItemsBig" EntitySet="ItemsBigs" />
+          </AssociationSet>
+          <FunctionImport Name="GetCustomersPaged" EntitySet="CustomersBigs" ReturnType="Collection(TrainingModel.CustomersBig)">
+            <Parameter Name="pagenumber" Mode="In" Type="Int32" />
+            <Parameter Name="pagesize" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetCustomersPaged_Result">
+          <Property Type="Int32" Name="ID_Customer" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="264" />
+          <Property Type="String" Name="Col1" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="Col2" Nullable="false" MaxLength="250" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TrainingModelStoreContainer" CdmEntityContainer="TrainingEntities">
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="TrainingModel.City">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomersBigs">
+            <EntityTypeMapping TypeName="TrainingModel.CustomersBig">
+              <MappingFragment StoreEntitySet="CustomersBig">
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Col1" ColumnName="Col1" />
+                <ScalarProperty Name="Col2" ColumnName="Col2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemsBigs">
+            <EntityTypeMapping TypeName="TrainingModel.ItemsBig">
+              <MappingFragment StoreEntitySet="ItemsBig">
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
+                <ScalarProperty Name="Delivery_Date" ColumnName="Delivery_Date" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdersBigs">
+            <EntityTypeMapping TypeName="TrainingModel.OrdersBig">
+              <MappingFragment StoreEntitySet="OrdersBig">
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Customer" ColumnName="ID_Customer" />
+                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductsBigs">
+            <EntityTypeMapping TypeName="TrainingModel.ProductsBig">
+              <MappingFragment StoreEntitySet="ProductsBig">
+                <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Col1" ColumnName="Col1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomersPaged" FunctionName="TrainingModel.Store.GetCustomersPaged">
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

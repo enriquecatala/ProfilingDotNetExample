@@ -1,0 +1,61 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Class="StockAdmin.CustomersSearchAndModify"
+	x:Name="UserControl" d:DesignHeight="250" d:DesignWidth="400"
+	 
+	DataContext="{Binding CustomersVM, Source={StaticResource Locator}}" >
+
+	<Grid x:Name="LayoutRoot">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="150"/>
+			<ColumnDefinition Width="19"/>
+			<ColumnDefinition Width="250"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="10"/>
+			<RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+			<RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="20*"/>
+		</Grid.RowDefinitions>
+
+		<!-- Busqueda por nombre -->
+		<StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Nombre"/>
+				<TextBox Text="{Binding NameToSearch}" MinWidth="100"/>
+			</StackPanel>
+			<Button Content="Buscar" Command="{Binding SearchWithNameUsingNotMappedObject}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="2">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Lista ids:"/>
+				<TextBox Text="{Binding CustomerIdsSeparatedByCommas}" MinWidth="100"/>
+			</StackPanel>
+			<Button Content="Buscar directo" Command="{Binding GetCustomersByIds}"/>
+		</StackPanel>
+        <Button Content="Buscar postprocesado" Grid.Row="3" Command="{Binding GetCustomersByIdsWithPostProcessing}"/>
+        <Button Grid.Row="5" Command="{Binding TestQueryingResultsInMemory}">
+            <TextBlock TextWrapping="Wrap">Test Querying results in memory</TextBlock>
+        </Button>
+
+
+        <ListView   Grid.Column="2" Grid.RowSpan="7" ItemsSource="{Binding Customers}" >
+				<ListView.View>
+					  <GridView>						
+						<GridViewColumn Width="120" Header="Id customer"  
+							DisplayMemberBinding="{Binding ID_Customer}" />
+						<GridViewColumn Width="120" Header="Nombre" 
+							DisplayMemberBinding="{Binding Name}" />
+					  </GridView>
+				</ListView.View>
+		</ListView>
+	</Grid>
+</UserControl>

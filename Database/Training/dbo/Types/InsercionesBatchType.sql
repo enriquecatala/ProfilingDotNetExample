@@ -1,0 +1,5 @@
+﻿CREATE TYPE dbo.InsercionesBatchType AS TABLE
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY, 
+    [texto] VARCHAR(256) NOT NULL
+)

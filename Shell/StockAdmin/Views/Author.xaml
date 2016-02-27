@@ -1,0 +1,15 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="StockAdmin.Author"
+	x:Name="Window"
+	Title="Author"
+	Width="276.17" Height="144.255">
+
+	<StackPanel x:Name="LayoutRoot">
+        <TextBox IsReadOnly="True" TextWrapping="Wrap">Demo para enseñar profiling de aplicaciones .NET en el SolidQ Summit 2015 Spain</TextBox>
+		<TextBlock/>
+        <TextBox IsReadOnly="True">Autor: Enrique Catalá Bañuls</TextBox>
+        <TextBox IsReadOnly="True">http://www.enriquecatala.com</TextBox>
+    </StackPanel>
+</Window>

@@ -1,0 +1,12 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="clr-namespace:StockAdmin"
+	x:Class="StockAdmin.Demo2View"
+	x:Name="Window"
+	Title="Demo2View" Height="270" Width="430">
+
+	<Grid x:Name="LayoutRoot">
+		<local:CustomersSearchAndModify  VerticalAlignment="Top"/>
+	</Grid>
+</Window>
