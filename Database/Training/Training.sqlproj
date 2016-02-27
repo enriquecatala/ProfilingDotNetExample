@@ -122,7 +122,7 @@
     <None Include="POST-DEPLOYMENT\CreateBigTables-release-environment.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Training-RELEASE.publish.xml" />
+    <None Include="Training-RELEASE .publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
